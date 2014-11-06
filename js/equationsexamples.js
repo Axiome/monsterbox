@@ -37,7 +37,7 @@ equations[4][1] = tree.parse({
 			children: [{
 				id: new Operand(operatorOperandSize, 'x', true)
 			}, {
-				id: new Operand(operatorOperandSize, '-6', false)
+				id: new Operand(operatorOperandSize, '6', false)
 			}]
 		}, {
 			id: new Operand(operatorOperandSize, '6', true)
@@ -53,7 +53,7 @@ equations[4][2] = tree.parse({
 		children: [{
 			id: new Operator(operatorOperandSize, '+'),
 			children: [{
-				id: new Operand(operatorOperandSize, '-5', false)
+				id: new Operand(operatorOperandSize, '5', false)
 			}, {
 				id: new Operand(operatorOperandSize, '5', true)
 			}]
@@ -62,12 +62,12 @@ equations[4][2] = tree.parse({
 		}]
 	}, {
 		id: new Operator(operatorOperandSize, '+'),
-		childrend: [{
+		children: [{
 			id: new Operator(operatorOperandSize, '+'),
 			children: [{
 				id: new Operand(operatorOperandSize, 'e', true)
 			}, {
-				id: new Operand(operatorOperandSize, '-e', false)
+				id: new Operand(operatorOperandSize, 'e', false)
 			}]
 		}, {
 			id: new Operator(operatorOperandSize, '+'),
@@ -88,7 +88,7 @@ equations[4][3] = tree.parse({
 		children: [{
 			id: new Operator(operatorOperandSize, '+'),
 			children: [{
-				id: new Operand(operatorOperandSize, '-c', false)
+				id: new Operand(operatorOperandSize, 'c', false)
 			}, {
 				id: new Operand(operatorOperandSize, 'x', true)
 			}]
@@ -118,7 +118,7 @@ equations[4][4] = tree.parse({
 				id: new Operand(operatorOperandSize, 'x', true)
 			}]
 		}, {
-			id: new Operand(operatorOperandSize, '-1', false)
+			id: new Operand(operatorOperandSize, '1', false)
 		}]
 	}, {
 		id: new Operand(operatorOperandSize, 'd', true)
