@@ -59,8 +59,42 @@ var Operand = Class.create(Label, {
 
       // SI on appuie sur une carte de valeur '0' ALORS
       if (this.value === '0') {
+			Game.instance.currentEquation.walk(function (node) {
+				console.log(node.model.id.text);
+			});			  
          var currentCard = this;
-         var nodes = Game.instance.currentEquation.first(function(node) {});
+			var father;
+			var brother;
+			var grandFather;
+         var node = Game.instance.currentEquation.first(function(node) { 
+				return node.model.id.value === '0';
+			});
+			father = node.parent;
+			grandFather = node.parent.parent;
+			if(father.children[0] === node){
+				brother = father.children[1];
+				brother.parent = grandFather;
+				if(grandFather.children[0] === father){
+					grandFather.children[0] = brother;
+				} else {
+					grandFather.children[1] = brother;
+				}
+			} else {
+				brother = father.children[0];
+				brother.parent = grandFather;
+				if(grandFather.children[0] === father){
+					grandFather.children[0] = brother;
+				} else {
+					grandFather.children[1] = brother;
+				}
+			}
+			node.drop();
+			console.log("after drop :");
+			Game.instance.currentEquation.walk(function (node) {
+				console.log(node.model.id.text);
+			});			  
+
+			//clear();
       }
 
       // On replace l'opérande si le drag est inutile
