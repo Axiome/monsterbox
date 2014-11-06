@@ -1,12 +1,9 @@
-var Operator = Class.create(Label, {
+var Operator = Class.create(MutableText, {
    initialize: function(width, value) {
-      Label.call(this);
+      MutableText.call(this);
 
       this.value = value;
-
       this.text = value;
-      this.color = COLOR2;
-      this.font = width + 'px Arial';
    },
    getValue: function() {
       return this.value;
