@@ -3,6 +3,8 @@ var GameScene = Class.create(Scene, {
       Scene.apply(this);
       this.NBCARDS = 0;
 
+      Game.instance.currentEquation = equations[Game.instance.currentChapter][Game.instance.currentLevel];
+
       var bg = new Sprite(WIDTH, HEIGHT);
       bg.backgroundColor = COLOR5;
 
@@ -44,10 +46,9 @@ var GameScene = Class.create(Scene, {
       this.refresh();
    },
    refresh: function() {
-      var root = Game.instance.equations[Game.instance.CURRENTCHAPTER][Game.instance.CURRENTLEVEL];
-      var currentNode = root;
+      var root = Game.instance.currentEquation;
       var nbCard = 0;
-      
+
       root.walk(function(node) {
          nbCard++;
       });
@@ -64,7 +65,7 @@ var GameScene = Class.create(Scene, {
 
       if (!node.hasChildren()) {
          var currentCard = node.model.id;
-         currentCard.setPosition((this.NBCARDS - newnbcards) * 100, HEIGHT / 2);
+         currentCard.setPosition((WIDTH / 4) + (this.NBCARDS - newnbcards) * 100, HEIGHT / 3);
          this.equationPanel.addChild(currentCard);
          if (bool) {
             newnbcards--;
@@ -78,11 +79,9 @@ var GameScene = Class.create(Scene, {
             this.recfresh(node.children[0], cards, false, false);
          }
          if (bool && !biil) {
-            var labelOperator = new Label(node.model.id);
-            labelOperator.font = (WIDTH / 16) + 'px Arial';
-            labelOperator.x = (this.NBCARDS - newnbcards) * 100;
-            labelOperator.y = HEIGHT / 2;
-            this.equationPanel.addChild(labelOperator);
+            var currentOperator = node.model.id;
+            currentOperator.setPosition((WIDTH / 4) + (this.NBCARDS - newnbcards) * 100, HEIGHT / 3);
+            this.equationPanel.addChild(currentOperator);
             newnbcards--;
             if (node.children[1].hasChildren()) {
                this.recfresh(node.children[1], newnbcards, false, false);
