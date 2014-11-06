@@ -1,5 +1,6 @@
 var tree = new TreeModel();
 var equations = [];
+var operatorOperandSize = WIDTH / 20;
 
 for (var i = 0; i < NUMBERCHAPTER; i++) {
 	equations[i] = [];
@@ -11,69 +12,69 @@ for (var i = 0; i < NUMBERCHAPTER; i++) {
 
 // Chapter 5, Level 1: 0 + x = b
 equations[4][0] = tree.parse({
-	id: '=',
+	id: new Operator(operatorOperandSize, '='),
 	children: [{
-		id: '+',
+		id: new Operator(operatorOperandSize, '+'),
 		children: [{
-			id: new Card(0 ,0, WIDTH / 16, '0', true)
+			id: new Operand(operatorOperandSize, '0', true)
 		}, {
-			id: new Card(0 ,0, WIDTH / 16, 'x', true)
+			id: new Operand(operatorOperandSize, 'x', true)
 		}]
 	}, {
-		id: new Card(0 ,0, WIDTH / 16, 'b', true)
+		id: new Operand(operatorOperandSize, 'b', true)
 	}]
 });
 
 // Chapter 5, Level 2: c = x + (-6) + 6
 equations[4][1] = tree.parse({
-	id: '=',
+	id: new Operator(operatorOperandSize, '='),
 	children: [{
-		id: new Card(WIDTH / 16, 0, 'c', true)
+		id: new Operand(operatorOperandSize, 'c', true)
 	}, {
-		id: '+',
+		id: new Operator(operatorOperandSize, '+'),
 		children: [{
-			id: '+',
+			id: new Operator(operatorOperandSize, '+'),
 			children: [{
-				id: new Card(WIDTH / 16, 0, 'x', true)
+				id: new Operand(operatorOperandSize, 'x', true)
 			}, {
-				id: new Card(WIDTH / 16, 0, '-6', false)
+				id: new Operand(operatorOperandSize, '-6', false)
 			}]
 		}, {
-			id: new Card(WIDTH / 16, 0, '6', true)
+			id: new Operand(operatorOperandSize, '6', true)
 		}]
 	}]
 });
 
 // Chapter 5, Level 3: (-5) + 5 + c = e + (-e) + 2 + x
 equations[4][2] = tree.parse({
-	id: '=',
+	id: new Operator(operatorOperandSize, '='),
 	children: [{
-		id: '+',
+		id: new Operator(operatorOperandSize, '+'),
 		children: [{
-			id: '+',
+			id: new Operator(operatorOperandSize, '+'),
 			children: [{
-				id: new Card(WIDTH / 16, 0, '-5', false)
+				id: new Operand(operatorOperandSize, '-5', false)
 			}, {
-				id: new Card(WIDTH / 16, 0, '5', true)
+				id: new Operand(operatorOperandSize, '5', true)
 			}]
 		}, {
-			id: new Card(WIDTH / 16, 0, 'c', true)
+			id: new Operand(operatorOperandSize, 'c', true)
 		}]
 	}, {
-		id: '+',
+		id: new Operator(operatorOperandSize, '+'),
 		childrend: [{
-			id: '+',
+			id: new Operator(operatorOperandSize, '+'),
 			children: [{
-				id: new Card(WIDTH / 16, 0, 'e', true)
+				id: new Operand(operatorOperandSize, 'e', true)
 			}, {
-				id: new Card(WIDTH / 16, 0, '-e', false)
+				id: new Operand(operatorOperandSize, '-e', false)
 			}]
 		}, {
-			id: '+',
+			id: new Operator(operatorOperandSize, '+'),
 			children: [{
-				id: new Card(WIDTH / 16, 0, '2', true)
+				id: new Operand(operatorOperandSize, '2', true)
 			}, {
-				id: new Card(WIDTH / 16, 0, 'x', true)
+				id: new Operand(operatorOperandSize, 'x', true)
 			}]
 		}]
 	}]
@@ -81,46 +82,46 @@ equations[4][2] = tree.parse({
 
 // Chapter 5, Level 4: (-c) + x + d = b
 equations[4][3] = tree.parse({
-	id: '=',
+	id: new Operator(operatorOperandSize, '='),
 	children: [{
-		id: '+',
+		id: new Operator(operatorOperandSize, '+'),
 		children: [{
-			id: '+',
+			id: new Operator(operatorOperandSize, '+'),
 			children: [{
-				id: new Card(WIDTH / 16, 0, '-c', false)
+				id: new Operand(operatorOperandSize, '-c', false)
 			}, {
-				id: new Card(WIDTH / 16, 0, 'x', true)
+				id: new Operand(operatorOperandSize, 'x', true)
 			}]
 		}, {
-			id: new Card(WIDTH / 16, 0, 'd', true)
+			id: new Operand(operatorOperandSize, 'd', true)
 		}]
 	}, {
-		id: new Card(WIDTH / 16, 0, 'b', true)
+		id: new Operand(operatorOperandSize, 'b', true)
 	}]
 });
 
 // Chapter 5, Level 5: (e/e) + x + (-1) = d
 equations[4][4] = tree.parse({
-	id: '=',
+	id: new Operator(operatorOperandSize, '='),
 	children: [{
-		id: '+',
+		id: new Operator(operatorOperandSize, '+'),
 		children: [{
-			id: '+',
+			id: new Operator(operatorOperandSize, '+'),
 			children: [{
-				id: '/',
+				id: new Operator(operatorOperandSize, '/'),
 				children: [{
-					id: new Card(WIDTH / 16, 0, 'e', true)
+					id: new Operand(operatorOperandSize, 'e', true)
 				}, {
-					id: new Card(WIDTH / 16, 0, 'e', true)
+					id: new Operand(operatorOperandSize, 'e', true)
 				}]
 			}, {
-				id: new Card(WIDTH / 16, 0, 'x', true)
+				id: new Operand(operatorOperandSize, 'x', true)
 			}]
 		}, {
-			id: new Card(WIDTH / 16, 0, '-1', false)
+			id: new Operand(operatorOperandSize, '-1', false)
 		}]
 	}, {
-		id: new Card(WIDTH / 16, 0, 'd', true)
+		id: new Operand(operatorOperandSize, 'd', true)
 	}]
 });
 
