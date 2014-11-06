@@ -14,7 +14,8 @@
 	<!-- CONSTANTS -->
 	<script src="js/constants.js"></script>
 	<!-- CLASSES -->
-	<script src="js/card.js"></script>
+	<script src="js/operand.js"></script>
+	<script src="js/operator.js"></script>
 	<script src="js/levelitem.js"></script>
 	<!-- SCENES -->
 	<script src="js/mainscene.js"></script>
@@ -30,11 +31,9 @@
 		window.onload = function() {
 			var game = new Game(WIDTH, HEIGHT);
 			game.fps = 30;
-			game.NUMBERCHAPTER = NUMBERCHAPTER;
-			game.NUMBERLEVEL = NUMBERLEVEL;
-			game.CURRENTCHAPTER = 4;
-			game.CURRENTLEVEL = 0;
-			game.equations = equations;
+			game.currentChapter = 4;
+			game.currentLevel = 0;
+			game.currentEquation = null;
 
 			game.onload = function() {
 				game.pushScene(new MainScene());
