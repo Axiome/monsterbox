@@ -1,13 +1,15 @@
-var Operand = Class.create(Label, {
+var Operand = Class.create(MutableText, {
    initialize: function(width, value, positive) {
-      Label.call(this);
+      MutableText.call(this);
 
       this.value = value;
       this.positive = positive;
 
-      this.text = value;
-      this.color = COLOR2;
-      this.font = width + 'px Arial';
+      if (!positive) {
+         this.text = '(-' + value + ')';
+      } else {
+         this.text = value;
+      }
    },
    getValue: function() {
       return this.value;
@@ -46,15 +48,13 @@ var Operand = Class.create(Label, {
 
          // SI les deux cartes sont des cartes opposées ALORS
          // On les supprime et on les remplace par une carte de valeur '0'
-         if ((operand1.getValue() === operand.getValue())  && (operand1.isPositive() !== operand2.isPositive())) {
+         if ((operand1.getValue() === operand2.getValue()) && (operand1.isPositive() !== operand2.isPositive())) {
             var node = Game.instance.currentEquation.walk(function(node) {
                if ((node.model.id === operand1) || (node.model.id === operand1)) {
                   return node.model.id;
                }
             });
          }
-
-         console.log(node);
       }
 
       // SI on appuie sur une carte de valeur '0' ALORS

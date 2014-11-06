@@ -13,10 +13,15 @@
 	<script>enchant();</script>
 	<!-- CONSTANTS -->
 	<script src="js/constants.js"></script>
+	<!-- MAIN -->
+	<script src="js/main.js"></script>
 	<!-- CLASSES -->
 	<script src="js/operand.js"></script>
 	<script src="js/operator.js"></script>
 	<script src="js/levelitem.js"></script>
+	<!-- EQUATIONS -->
+	<script src="js/libs/treemodel.js"></script>
+	<script src="js/equationsexamples.js"></script>
 	<!-- SCENES -->
 	<script src="js/mainscene.js"></script>
 	<script src="js/helpscene.js"></script>
@@ -24,24 +29,5 @@
 	<script src="js/levelselectionscene.js"></script>
 	<script src="js/gamescene.js"></script>
 	<script src="js/pausescene.js"></script>
-	<!-- EQUATIONS -->
-	<script src="js/libs/treemodel.js"></script>
-	<script src="js/equationsexamples.js"></script>
-	<script>
-		window.onload = function() {
-			var game = new Game(WIDTH, HEIGHT);
-			game.fps = 30;
-			game.currentChapter = 4;
-			game.currentLevel = 0;
-			game.currentEquation = null;
-
-			game.onload = function() {
-				game.pushScene(new MainScene());
-				game.preload('icon0.png');
-			};
-
-			game.start();
-		};
-	</script>
 </body>
 </html>
