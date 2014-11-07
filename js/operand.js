@@ -49,9 +49,13 @@ var Operand = Class.create(MutableText, {
          // SI les deux cartes sont des cartes opposées ALORS
          // On les supprime et on les remplace par une carte de valeur '0'
          if ((operand1.getValue() === operand2.getValue()) && (operand1.isPositive() !== operand2.isPositive())) {
-            var node = Game.instance.currentEquation.walk(function(node) {
+            var nodeToDrop = Game.instance.currentEquation.walk(function(node) {
                if ((node.model.id === operand1) || (node.model.id === operand1)) {
-                  return node.model.id;
+                  if (node.parent.model.id.getValue() === '+' || node.parent.model.id.getValue() === '-') {
+                     if (node.parent.parent.model.id.getValue() === '+' || node.parent.parent.model.id.getValue() === '-') {
+                        // TODO
+                     }
+                  }
                }
             });
          }
@@ -60,7 +64,7 @@ var Operand = Class.create(MutableText, {
       // SI on appuie sur une carte de valeur '0' ALORS
       if (this.value === '0') {
          var currentCard = this;
-         var nodes = Game.instance.currentEquation.first(function(node) {});
+         var node = Game.instance.currentEquation.first(function(node) {});
       }
 
       // On replace l'opérande si le drag est inutile
@@ -84,7 +88,7 @@ var Operand = Class.create(MutableText, {
 
       var intersection = this.intersect(Operand);
       if (intersection.length > 1) {
-         console.log('intersection');
+         // console.log('intersection');
       }
    }
 });

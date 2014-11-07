@@ -3,7 +3,7 @@ var GameScene = Class.create(Scene, {
       Scene.apply(this);
       this.NBCARDS = 0;
 
-      Game.instance.currentEquation = equations[Game.instance.currentChapter][Game.instance.currentLevel];
+      Game.instance.currentEquation = new Equation().getEquation(Game.instance.currentChapter, Game.instance.currentLevel);
 
       var bg = new Sprite(WIDTH, HEIGHT);
       bg.backgroundColor = COLOR5;
