@@ -49,24 +49,86 @@ var Operand = Class.create(MutableText, {
          // SI les deux cartes sont des cartes opposées ALORS
          // On les supprime et on les remplace par une carte de valeur '0'
          if ((operand1.getValue() === operand2.getValue()) && (operand1.isPositive() !== operand2.isPositive())) {
-            var nodeToDrop = Game.instance.currentEquation.walk(function(node) {
+            /*var nodeToDrop = Game.instance.currentEquation.walk(function(node) {
                if ((node.model.id === operand1) || (node.model.id === operand1)) {
-                  if (node.parent.model.id.getValue() === '+' || node.parent.model.id.getValue() === '-') {
-                     if (node.parent.parent.model.id.getValue() === '+' || node.parent.parent.model.id.getValue() === '-') {
+                  if (node.parent.model.id.getValue() === '+') {
+                     if (node.parent.parent.model.id.getValue() === '+') {
                         // TODO
                      }
                   }
                }
             });
-         }
+         }*/
+			// PAS ENCORE OPERATIONNEL
+				console.log("befor intersect");
+		 		Game.instance.currentEquation.walk(function (node) {
+					console.log(node.model.id.text);
+				});
+				var node1 = Game.instance.currentEquation.first(function (node) {
+					return node.model.id.getValue() === operand1.getValue();
+				});
+				var node2 = Game.instance.currentEquation.first(function (node) {
+					return (node.model.id.getValue() === operand1.getValue()) && (node != node1);
+				});
+				if(node1.parent.model.id.getValue() === '+'){
+					if(node1.parent === node2.parent){
+						if(node1.parent.parent.children[0] === node1.parent){
+							node1.parent.parent.children[0] = new Operand(WIDTH / 20, '0', true);
+						} else {
+							node1.parent.parent.children[1] = new Operand(WIDTH / 20, '0', true);
+						}
+						node1.parent.drop();
+						node1.drop();
+						node2.drop();
+					}
+				}
+				console.log("after :");
+		 		Game.instance.currentEquation.walk(function (node) {
+					console.log(node.model.id.text);
+				});
+			}
+
       }
 
       // SI on appuie sur une carte de valeur '0' ALORS
-      if (this.value === '0') {
-         var currentCard = this;
-         var node = Game.instance.currentEquation.first(function(node) {});
-      }
-
+		if (this.value === '0') {
+			Game.instance.currentEquation.walk(function (node) {
+				console.log(node.model.id.text);
+			});			  
+			Game.instance.currentGameScene.clear();
+			var currentCard = this;
+			var father;
+			var brother;
+			var grandFather;
+			var node = Game.instance.currentEquation.first(function(node) {
+				return node.model.id.value === '0';
+			});
+			father = node.parent;
+			grandFather = node.parent.parent;
+			if(father.children[0] === node){
+				brother = father.children[1];
+				brother.parent = grandFather;
+				if(grandFather.children[0] === father){
+						  grandFather.children[0] = brother;
+				} else {
+						  grandFather.children[1] = brother;
+				}
+			} else {
+					  brother = father.children[0];
+					  brother.parent = grandFather;
+					  if(grandFather.children[0] === father){
+								 grandFather.children[0] = brother;
+					  } else {
+								 grandFather.children[1] = brother;
+					  }
+			}
+			node.drop();
+			console.log("after drop :");
+			Game.instance.currentEquation.walk(function (node) {
+					  console.log(node.model.id.text);
+			});			  
+			Game.instance.currentGameScene.refresh();
+		}
       // On replace l'opérande si le drag est inutile
       this.x = this.originalX;
       this.y = this.originalY;

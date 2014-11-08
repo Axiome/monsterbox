@@ -44,6 +44,7 @@ var GameScene = Class.create(Scene, {
       this.addChild(this.equationPanel);
       this.addChild(deckPanel);
       this.refresh();
+      Game.instance.currentGameScene = this;
    },
    refresh: function() {
       var root = Game.instance.currentEquation;
@@ -94,6 +95,15 @@ var GameScene = Class.create(Scene, {
          }
       }
    },
+   clear: function() {
+		var root = Game.instance.currentEquation;
+		var compteur = 0;
+				console.log("clear :");
+		root.walk(function (node) {
+				  console.log(node.model.id);
+			Game.instance.currentGameScene.equationPanel.removeChild(node.model.id);
+		});
+	},
    goBack: function() {
       Game.instance.replaceScene(new LevelScene());
    },
