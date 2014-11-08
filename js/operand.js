@@ -49,43 +49,40 @@ var Operand = Class.create(MutableText, {
          // SI les deux cartes sont des cartes opposées ALORS
          // On les supprime et on les remplace par une carte de valeur '0'
          if ((operand1.getValue() === operand2.getValue()) && (operand1.isPositive() !== operand2.isPositive())) {
-            /*var nodeToDrop = Game.instance.currentEquation.walk(function(node) {
-               if ((node.model.id === operand1) || (node.model.id === operand1)) {
-                  if (node.parent.model.id.getValue() === '+') {
-                     if (node.parent.parent.model.id.getValue() === '+') {
-                        // TODO
-                     }
-                  }
-               }
-            });
-         }*/
-			// PAS ENCORE OPERATIONNEL
-				console.log("befor intersect");
-		 		Game.instance.currentEquation.walk(function (node) {
-					console.log(node.model.id.text);
-				});
-				var node1 = Game.instance.currentEquation.first(function (node) {
-					return node.model.id.getValue() === operand1.getValue();
-				});
-				var node2 = Game.instance.currentEquation.first(function (node) {
-					return (node.model.id.getValue() === operand1.getValue()) && (node != node1);
-				});
-				if(node1.parent.model.id.getValue() === '+'){
-					if(node1.parent === node2.parent){
-						if(node1.parent.parent.children[0] === node1.parent){
-							node1.parent.parent.children[0] = new Operand(WIDTH / 20, '0', true);
+				Game.instance.currentGameScene.clear();
+					var node1 = Game.instance.currentEquation.first(function (node) {
+						return node.model.id.getValue() === operand1.getValue();
+					});
+					var node2 = Game.instance.currentEquation.first(function (node) {
+						return (node.model.id.getValue() === operand1.getValue()) && (node != node1);
+					});
+					if(node1.parent.model.id.getValue() === '+'){
+						if(node1.parent === node2.parent){
+							if(node1.parent.parent.children[0] === node1.parent){
+								node1.parent.parent.children[0].model.id = new Operand(WIDTH / 20, '0', true);
+							} else {
+								node1.parent.parent.children[1].model.id = new Operand(WIDTH / 20, '0', true);
+							}
+							node1.drop();
+							node2.drop();
 						} else {
-							node1.parent.parent.children[1] = new Operand(WIDTH / 20, '0', true);
+							if(node1.parent.parent.model.id.getValue() === '+'){
+								if(node1.parent.parent === node2.parent){
+									var brother;
+									if(node1.parent.children[0] === node1){
+										node1.parent.model.id = node1.parent.children[1].model.id;
+										node1.parent.children[1].drop();
+									} else {
+										node1.parent.model.id = node1.parent.children[0].model.id;
+										node1.parent.children[0].drop();
+									}
+									node1.drop();
+									node2.model.id = new Operand(WIDTH / 20, '0', true);
+								}
+							}
 						}
-						node1.parent.drop();
-						node1.drop();
-						node2.drop();
 					}
-				}
-				console.log("after :");
-		 		Game.instance.currentEquation.walk(function (node) {
-					console.log(node.model.id.text);
-				});
+					Game.instance.currentGameScene.refresh();
 			}
 
       }
