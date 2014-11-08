@@ -1,12 +1,14 @@
-var game = new Game(WIDTH, HEIGHT);
-game.fps = 30;
-game.currentChapter = 4;
-game.currentLevel = 1;
-game.currentEquation = null;
+window.onload = function() {
+	var game = new Game(WIDTH, HEIGHT);
+	game.fps = 30;
+	game.currentChapter = 4;
+	game.currentLevel = 1;
+	game.currentEquation = null;
 
-game.onload = function() {
-	game.pushScene(new MainScene());
-	game.preload('icon0.png');
-};
+	game.onload = function() {
+		game.pushScene(new MainScene());
+		game.preload('icon0.png');
+	};
 
-game.start();
+	game.start();
+}
