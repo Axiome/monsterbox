@@ -4,6 +4,7 @@ window.onload = function() {
 	game.currentChapter = 4;
 	game.currentLevel = 1;
 	game.currentEquation = null;
+	game.currentGameScene = null;
 
 	game.onload = function() {
 		game.pushScene(new MainScene());
