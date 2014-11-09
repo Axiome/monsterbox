@@ -57,6 +57,7 @@ var GameScene = Class.create(Scene, {
       this.NBCARDS = nbCard;
 
       this.recfresh(root, this.NBCARDS, false, false);
+		this.endLevel();
    },
    recfresh: function(node, cards, bool, biil) {
       newnbcards = cards;
@@ -103,6 +104,15 @@ var GameScene = Class.create(Scene, {
 				  console.log(node.model.id);
 			Game.instance.currentGameScene.equationPanel.removeChild(node.model.id);
 		});
+	},
+	endLevel: function() {
+		var root = Game.instance.currentEquation;
+		var nodeRoot = root.first(function (node) {
+			return node.isRoot();
+		});
+		if((nodeRoot.children[0].model.id.getValue() === 'x') || (nodeRoot.children[1].model.id.getValue() === 'x')){
+			console.log("Level done");
+		}
 	},
    goBack: function() {
       Game.instance.replaceScene(new LevelScene());
