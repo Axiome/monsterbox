@@ -49,7 +49,6 @@ var GameScene = Class.create(Scene, {
    refresh: function() {
       var root = Game.instance.currentEquation;
       var nbCard = 0;
-
       root.walk(function(node) {
          nbCard++;
       });
@@ -101,7 +100,7 @@ var GameScene = Class.create(Scene, {
 		var compteur = 0;
 				console.log("clear :");
 		root.walk(function (node) {
-				  console.log(node.model.id);
+				  console.log(node.model.id.getValue());
 			Game.instance.currentGameScene.equationPanel.removeChild(node.model.id);
 		});
 	},
