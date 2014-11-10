@@ -6,6 +6,8 @@ var GameScene = Class.create(Scene, {
       Game.instance.currentGameScene = this;
       Game.instance.currentEquation = new Equation().getEquation(Game.instance.currentChapter, Game.instance.currentLevel);
 
+      console.log(Game.instance.currentEquation);
+
       var bg = new Sprite(WIDTH, HEIGHT);
       bg.backgroundColor = COLOR5;
 
@@ -37,6 +39,20 @@ var GameScene = Class.create(Scene, {
       deckPanel.x = 0;
       deckPanel.y = HEIGHT - deckPanel.firstChild.height;
       deckPanel.firstChild.backgroundColor = COLOR4;
+      for (var i = 0; i < NUMBERLEVEL; i++) {
+         var level = new MutableText(0, 0, 0);
+         level.setText('*');
+
+         if (Game.instance.currentLevel >= i) {
+            level.opacity = 1;
+         } else {
+            level.opacity = 0.25;
+         }
+
+         level.x = (WIDTH / 5) + (i * 32);
+         level.y = 10;
+         deckPanel.addChild(level);
+      };
 
       this.addChild(bg);
       this.addChild(btnGoBack);

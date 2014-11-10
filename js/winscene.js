@@ -3,7 +3,7 @@ var WinScene = Class.create(Scene, {
       Scene.apply(this);
 
       var bg = new Sprite(WIDTH, HEIGHT);
-      bg.backgroundColor = COLOR2;
+      bg.backgroundColor = COLOR4;
       bg.opacity = 0.9;
 
       var btnRetry = new MutableText(0, 0, 0);
@@ -23,16 +23,24 @@ var WinScene = Class.create(Scene, {
       title.x = (WIDTH / 2) - (title.width / 2);
       title.y = HEIGHT / 12;
 
+      var levelDone = new MutableText(0, 0, 0);
+      levelDone.setText('Level ' + (Game.instance.currentLevel + 1) + ' done');
+      levelDone.x = (WIDTH / 2) - (levelDone.width / 2);
+      levelDone.y = HEIGHT / 3;
+
       this.addChild(bg);
       this.addChild(btnRetry);
       this.addChild(btnGoNextLevel);
       this.addChild(title);
+      this.addChild(levelDone);
    },
    retry: function() {
       Game.instance.replaceScene(new GameScene());
    },
    goNextLevel: function() {
       Game.instance.currentLevel += 1;
-      Game.instance.replaceScene(new GameScene());
+      this.tl.delay(15).then(function() {
+         Game.instance.replaceScene(new GameScene());
+      });
    }
 });

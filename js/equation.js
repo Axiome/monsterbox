@@ -48,62 +48,62 @@ var Equation = Class.create({
       });
 
       // Chapter 5, Level 3: (-5) + 5 + c = e + (-e) + 2 + x
-      this.equations[4][2] = this.tree.parse({
-         id: new Operator(operatorOperandSize, '='),
-         children: [{
-            id: new Operator(operatorOperandSize, '+'),
-            children: [{
-               id: new Operator(operatorOperandSize, '+'),
-               children: [{
-                  id: new Operand(operatorOperandSize, '5', false)
-               }, {
-                  id: new Operand(operatorOperandSize, '5', true)
-               }]
-            }, {
-               id: new Operand(operatorOperandSize, 'c', true)
-            }]
-         }, {
-            id: new Operator(operatorOperandSize, '+'),
-            children: [{
-               id: new Operator(operatorOperandSize, '+'),
-               children: [{
-                  id: new Operand(operatorOperandSize, 'e', true)
-               }, {
-                  id: new Operand(operatorOperandSize, 'e', false)
-               }]
-            }, {
-               id: new Operator(operatorOperandSize, '+'),
-               children: [{
-                  id: new Operand(operatorOperandSize, '2', true)
-               }, {
-                  id: new Operand(operatorOperandSize, 'x', true)
-               }]
-            }]
-         }]
-      });
+      // this.equations[4][2] = this.tree.parse({
+      //    id: new Operator(operatorOperandSize, '='),
+      //    children: [{
+      //       id: new Operator(operatorOperandSize, '+'),
+      //       children: [{
+      //          id: new Operator(operatorOperandSize, '+'),
+      //          children: [{
+      //             id: new Operand(operatorOperandSize, '5', false)
+      //          }, {
+      //             id: new Operand(operatorOperandSize, '5', true)
+      //          }]
+      //       }, {
+      //          id: new Operand(operatorOperandSize, 'c', true)
+      //       }]
+      //    }, {
+      //       id: new Operator(operatorOperandSize, '+'),
+      //       children: [{
+      //          id: new Operator(operatorOperandSize, '+'),
+      //          children: [{
+      //             id: new Operand(operatorOperandSize, 'e', true)
+      //          }, {
+      //             id: new Operand(operatorOperandSize, 'e', false)
+      //          }]
+      //       }, {
+      //          id: new Operator(operatorOperandSize, '+'),
+      //          children: [{
+      //             id: new Operand(operatorOperandSize, '2', true)
+      //          }, {
+      //             id: new Operand(operatorOperandSize, 'x', true)
+      //          }]
+      //       }]
+      //    }]
+      // });
 
       // Chapter 5, Level 4: (-c) + x + d = b
-      this.equations[4][3] = this.tree.parse({
-         id: new Operator(operatorOperandSize, '='),
-         children: [{
-            id: new Operator(operatorOperandSize, '+'),
-            children: [{
-               id: new Operator(operatorOperandSize, '+'),
-               children: [{
-                  id: new Operand(operatorOperandSize, 'c', false)
-               }, {
-                  id: new Operand(operatorOperandSize, 'x', true)
-               }]
-            }, {
-               id: new Operand(operatorOperandSize, 'd', true)
-            }]
-         }, {
-            id: new Operand(operatorOperandSize, 'b', true)
-         }]
-      });
+      // this.equations[4][3] = this.tree.parse({
+      //    id: new Operator(operatorOperandSize, '='),
+      //    children: [{
+      //       id: new Operator(operatorOperandSize, '+'),
+      //       children: [{
+      //          id: new Operator(operatorOperandSize, '+'),
+      //          children: [{
+      //             id: new Operand(operatorOperandSize, 'c', false)
+      //          }, {
+      //             id: new Operand(operatorOperandSize, 'x', true)
+      //          }]
+      //       }, {
+      //          id: new Operand(operatorOperandSize, 'd', true)
+      //       }]
+      //    }, {
+      //       id: new Operand(operatorOperandSize, 'b', true)
+      //    }]
+      // });
 
-      // Chapter 5, Level 5: (e/e) + x + (-1) = d
-      this.equations[4][4] = this.tree.parse({
+      // Chapter 5, Level 3: (e/e) + x + (-1) = d
+      this.equations[4][2] = this.tree.parse({
          id: new Operator(operatorOperandSize, '='),
          children: [{
             id: new Operator(operatorOperandSize, '+'),

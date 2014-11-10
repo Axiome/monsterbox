@@ -51,9 +51,6 @@ var Operand = Class.create(MutableText, {
 			var node2 = Game.instance.currentEquation.first(function(node) {
 				return (node.model.id.getValue() === operand1.getValue()) && (node != node1);
 			});
-			console.log("node1 : ", node1.model.id.getValue());
-			console.log("node1.parent : ", node1.parent.model.id.getValue());
-			console.log("node2 : ", node2.model.id.getValue());
 			// SI les deux cartes sont des cartes opposées ALORS
 			// On les supprime et on les remplace par une carte de valeur '0'
 			if ((operand1.getValue() === operand2.getValue()) && (operand1.isPositive() !== operand2.isPositive())) {
@@ -148,9 +145,6 @@ var Operand = Class.create(MutableText, {
 
 		// SI on appuie sur une carte de valeur '0' ALORS
 		if (this.value === '0') {
-			Game.instance.currentEquation.walk(function(node) {
-				console.log(node.model.id.text);
-			});
 			Game.instance.currentGameScene.clear();
 			var currentCard = this;
 			var father;
@@ -180,10 +174,7 @@ var Operand = Class.create(MutableText, {
 			}
 			node.drop();
 		}
-		console.log("after drop :");
-		Game.instance.currentEquation.walk(function(node) {
-			console.log(node.model.id.text);
-		});
+
 		Game.instance.currentGameScene.refresh();
 		// On replace l'opérande si le drag est inutile
 		this.x = this.originalX;
