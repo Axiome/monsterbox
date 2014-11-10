@@ -2,7 +2,7 @@ var GameScene = Class.create(Scene, {
    initialize: function() {
       Scene.apply(this);
       this.NBCARDS = 0;
-
+		this.printedElemts = 0;	
       Game.instance.currentGameScene = this;
       Game.instance.currentEquation = new Equation().getEquation(Game.instance.currentChapter, Game.instance.currentLevel);
 
@@ -65,26 +65,32 @@ var GameScene = Class.create(Scene, {
    refresh: function() {
       var equation = Game.instance.currentEquation;
       var nbCard = 0;
-<<<<<<< HEAD
-      root.walk(function(node) {
-=======
-
       equation.walk(function(node) {
->>>>>>> 46e391bc8f66da149de490eb5908e832fd53a8bc
          nbCard++;
       });
 
       this.NBCARDS = nbCard;
-      this.recfresh(equation, this.NBCARDS, false, false);
+      this.recfresh(equation, this.NBCARDS, false, false, false, false);
       this.endLevel();
    },
-   recfresh: function(node, cards, bool, biil) {
+   /*recfresh: function(node, cards, bool, biil, baal, buul) {
       newnbcards = cards;
       if (cards == 0) {
          return;
       }
-
-      if (!node.hasChildren()) {
+		if(node.isRoot()){
+			this.printedElemts = 0;
+			if(!buul){
+				var equal = node.model.id;
+				equal.setPosition(WIDTH / 2, HEIGHT / 3);
+				this.equationPanel.addChild(equal);
+				newnbcards--;
+				this.recfresh(node.children[0], newnbcards, false, false, false, true);
+			} else {
+				this.recfresh(node.children[1], newnbcards, false, false, true, true);
+			}
+		}
+		else if (!node.hasChildren()) {
          var currentCard = node.model.id;
          currentCard.setPosition((WIDTH / 4) + (this.NBCARDS - newnbcards) * 100, HEIGHT / 3);
          this.equationPanel.addChild(currentCard);
@@ -114,27 +120,85 @@ var GameScene = Class.create(Scene, {
             this.recfresh(node.parent, cards, true, false);
          }
       }
-   },
-   clear: function() {
-<<<<<<< HEAD
-		var root = Game.instance.currentEquation;
-		var compteur = 0;
-				console.log("clear :");
-		root.walk(function (node) {
-				  console.log(node.model.id.getValue());
-			Game.instance.currentGameScene.equationPanel.removeChild(node.model.id);
-		});
-	},
-	endLevel: function() {
-		var root = Game.instance.currentEquation;
-		var nodeRoot = root.first(function (node) {
-			return node.isRoot();
-		});
-		if((nodeRoot.children[0].model.id.getValue() === 'x') || (nodeRoot.children[1].model.id.getValue() === 'x')){
-			console.log("Level done");
+   },*/
+	recfresh: function(node, cards, bool, biil, baal, buul) {
+		var newnbcards = cards;
+		if (cards == 0) {
+			return;
+		}
+							  		
+		if (node.isRoot()) {
+			this.printedElemts = 0;
+			if(!buul) {
+				var equal = node.model.id;
+				equal.setPosition(WIDTH / 2, HEIGHT / 3);
+				this.equationPanel.addChild(equal);
+				newnbcards--;
+				this.recfresh(node.children[0], newnbcards, false, false, false, true);
+			} else {
+				this.recfresh(node.children[1], newnbcards, false, false, true, true);
+			}
+		} else if (!node.hasChildren()) {
+		   var currentCard = node.model.id;
+			console.log(currentCard);
+			this.printedElemts++;
+			if(!baal) {
+		     	currentCard.setPosition((WIDTH / 2) - this.printedElemts * 60, HEIGHT / 3);
+			} else {
+				currentCard.setPosition((WIDTH / 2) + this.printedElemts * 60, HEIGHT / 3);
+			}
+			this.equationPanel.addChild(currentCard);
+	      if (bool) {
+		     	newnbcards--;
+           	this.recfresh(node.parent, newnbcards, true, true, baal, true);
+         } else {
+           	newnbcards--;
+        	this.recfresh(node.parent, newnbcards, true, false, baal, true);
+         }
+		} else {
+        	if (!bool) {
+  				if(!baal) {
+        			this.recfresh(node.children[1], cards, false, false, baal, true);
+				} else {
+      			this.recfresh(node.children[0], cards, false, false, baal, true);
+				}
+	     	}
+        	if (bool && !biil) {
+  				this.printedElemts++;
+        		var currentOperator = node.model.id;
+				if(!baal) {
+	     			currentOperator.setPosition((WIDTH / 2) - this.printedElemts * 60, HEIGHT / 3);
+				} else {
+					currentOperator.setPosition((WIDTH / 2) + this.printedElemts * 60, HEIGHT / 3);
+				}
+        		this.equationPanel.addChild(currentOperator);
+        		newnbcards--;
+				if(!baal) {
+        			if (node.children[0].hasChildren()) {
+           			this.recfresh(node.children[0], newnbcards, false, false, baal, true);
+        			} else {
+           			this.recfresh(node.children[0], newnbcards, true, false, baal, true);
+	     			}
+				} else {
+	     			if (node.children[1].hasChildren()) {
+	        			this.recfresh(node.children[1], newnbcards, false, false, baal, true);
+	     			} else {
+	        			this.recfresh(node.children[1], newnbcards, true, false, baal, true);
+	     			}
+	     		}
+			}
+	     	if (bool && biil) {
+				if (!baal) {
+	     			this.recfresh(node.parent, cards, true, true, baal, true);
+	     		} else {
+	     			this.recfresh(node.parent, cards, true, false, baal, true);
+	     		}
+	     	}
 		}
 	},
-=======
+
+
+   clear: function() {
       var equation = Game.instance.currentEquation;
       equation.walk(function(node) {
          Game.instance.currentGameScene.equationPanel.removeChild(node.model.id);
@@ -152,7 +216,6 @@ var GameScene = Class.create(Scene, {
          });
       }
    },
->>>>>>> 46e391bc8f66da149de490eb5908e832fd53a8bc
    goBack: function() {
       Game.instance.replaceScene(new LevelScene());
    },
