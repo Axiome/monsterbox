@@ -12,7 +12,7 @@ var LevelScene = Class.create(Scene, {
       btnGoBack.addEventListener('touchend', this.goBack);
 
       var title = new MutableText(0, 0, 0);
-      title.setText('Select level');
+      title.setText('Select levelItem');
       title.x = (WIDTH / 2) - (title.width / 2);
       title.y = HEIGHT / 12;
 
@@ -25,10 +25,13 @@ var LevelScene = Class.create(Scene, {
             lines++;
          }
 
-         var level = new LevelItem(WIDTH / 10, '#4CB547', '#5FE359', i + 1);
-         level.setPosition(((WIDTH / 6) * (j + .75)), (HEIGHT / (numberOfLevels / 4)) + ((HEIGHT / ((numberOfLevels / 4) + 1)) * lines));
-         level.addEventListener('touchend', this.goToLevel);
-         levels.addChild(level);
+         var level = i;
+         var text = level + 1;
+         var levelItem = new LevelItem(WIDTH / 10, '#4CB547', '#5FE359', text);
+         levelItem.setPosition(((WIDTH / 6) * (j + .75)), (HEIGHT / (numberOfLevels / 4)) + ((HEIGHT / ((numberOfLevels / 4) + 1)) * lines));
+         levelItem.setLevel(level);
+         levelItem.addEventListener('touchend', this.goToLevel);
+         levels.addChild(levelItem);
       }
 
       this.addChild(bg);
@@ -40,6 +43,7 @@ var LevelScene = Class.create(Scene, {
       Game.instance.replaceScene(new MainScene());
    },
    goToLevel: function() {
+      Game.instance.currentLevel = this.getLevel();
       Game.instance.replaceScene(new GameScene());
    }
 });

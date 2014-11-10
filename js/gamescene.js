@@ -3,6 +3,7 @@ var GameScene = Class.create(Scene, {
       Scene.apply(this);
       this.NBCARDS = 0;
 
+      Game.instance.currentGameScene = this;
       Game.instance.currentEquation = new Equation().getEquation(Game.instance.currentChapter, Game.instance.currentLevel);
 
       var bg = new Sprite(WIDTH, HEIGHT);
@@ -44,19 +45,22 @@ var GameScene = Class.create(Scene, {
       this.addChild(this.equationPanel);
       this.addChild(deckPanel);
       this.refresh();
-      Game.instance.currentGameScene = this;
    },
    refresh: function() {
-      var root = Game.instance.currentEquation;
+      var equation = Game.instance.currentEquation;
       var nbCard = 0;
+<<<<<<< HEAD
       root.walk(function(node) {
+=======
+
+      equation.walk(function(node) {
+>>>>>>> 46e391bc8f66da149de490eb5908e832fd53a8bc
          nbCard++;
       });
 
       this.NBCARDS = nbCard;
-
-      this.recfresh(root, this.NBCARDS, false, false);
-		this.endLevel();
+      this.recfresh(equation, this.NBCARDS, false, false);
+      this.endLevel();
    },
    recfresh: function(node, cards, bool, biil) {
       newnbcards = cards;
@@ -96,6 +100,7 @@ var GameScene = Class.create(Scene, {
       }
    },
    clear: function() {
+<<<<<<< HEAD
 		var root = Game.instance.currentEquation;
 		var compteur = 0;
 				console.log("clear :");
@@ -113,6 +118,25 @@ var GameScene = Class.create(Scene, {
 			console.log("Level done");
 		}
 	},
+=======
+      var equation = Game.instance.currentEquation;
+      equation.walk(function(node) {
+         Game.instance.currentGameScene.equationPanel.removeChild(node.model.id);
+      });
+   },
+   endLevel: function() {
+      var equation = Game.instance.currentEquation;
+      var rootNode = equation.first(function(node) {
+         return node.isRoot();
+      });
+
+      if ((rootNode.children[0].model.id.getValue() === 'x') || (rootNode.children[1].model.id.getValue() === 'x')) {
+         this.tl.delay(30).then(function() {
+            Game.instance.replaceScene(new WinScene());
+         });
+      }
+   },
+>>>>>>> 46e391bc8f66da149de490eb5908e832fd53a8bc
    goBack: function() {
       Game.instance.replaceScene(new LevelScene());
    },
