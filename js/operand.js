@@ -45,30 +45,90 @@ var Operand = Class.create(MutableText, {
       if (intersection.length > 1) {
          var operand1 = intersection[0];
          var operand2 = intersection[1];
-
+			Game.instance.currentGameScene.clear();
+			var node1 = Game.instance.currentEquation.first(function (node) {
+				return node.model.id.getValue() === operand1.getValue();
+			});
+			var node2 = Game.instance.currentEquation.first(function (node) {
+				return (node.model.id.getValue() === operand1.getValue()) && (node != node1);
+			});
+			console.log("node1 : ", node1.model.id.getValue());
+			console.log("node1.parent : ", node1.parent.model.id.getValue());
+			console.log("node2 : ", node2.model.id.getValue());
          // SI les deux cartes sont des cartes opposées ALORS
          // On les supprime et on les remplace par une carte de valeur '0'
          if ((operand1.getValue() === operand2.getValue()) && (operand1.isPositive() !== operand2.isPositive())) {
 				Game.instance.currentGameScene.clear();
-					var node1 = Game.instance.currentEquation.first(function (node) {
-						return node.model.id.getValue() === operand1.getValue();
-					});
-					var node2 = Game.instance.currentEquation.first(function (node) {
-						return (node.model.id.getValue() === operand1.getValue()) && (node != node1);
-					});
-					if(node1.parent.model.id.getValue() === '+'){
+				// SI les deux cartes sont relier par un +
+				if(node1.parent.model.id.getValue() === '+'){
+					if(node1.parent === node2.parent){
+						if(node1.parent.parent.children[0] === node1.parent){
+							node1.parent.parent.children[0].model.id = new Operand(WIDTH / 20, '0', true);
+						} else {
+							node1.parent.parent.children[1].model.id = new Operand(WIDTH / 20, '0', true);
+						}
+						node1.drop();
+						node2.drop();
+					} else {
+						if(node1.parent.parent.model.id.getValue() === '+'){
+							if(node1.parent.parent === node2.parent){
+								if(node1.parent.children[0] === node1){
+									node1.parent.model.id = node1.parent.children[1].model.id;
+									node1.parent.children[1].drop();
+								} else {
+									node1.parent.model.id = node1.parent.children[0].model.id;
+									node1.parent.children[0].drop();
+								}
+								node1.drop();
+								node2.model.id = new Operand(WIDTH / 20, '0', true);
+							}
+						}
+					}
+				// SI les deux cartes sont relier par un /
+				} else {
+					if(node1.parent.model.id.getValue() === '/'){
 						if(node1.parent === node2.parent){
 							if(node1.parent.parent.children[0] === node1.parent){
-								node1.parent.parent.children[0].model.id = new Operand(WIDTH / 20, '0', true);
+								node1.parent.parent.children[0].model.id = new Operand(WIDTH / 20, '1', false);
 							} else {
-								node1.parent.parent.children[1].model.id = new Operand(WIDTH / 20, '0', true);
+								node1.parent.parent.children[1].model.id = new Operand(WIDTH / 20, '1', false);
 							}
 							node1.drop();
 							node2.drop();
 						} else {
-							if(node1.parent.parent.model.id.getValue() === '+'){
+							if(node1.parent.parent.model.id.getValue() === '/'){
 								if(node1.parent.parent === node2.parent){
-									var brother;
+									if(node1.parent.children[0] === node1){
+										node1.parent.mode.id = node1.parent.children[1].model.id;
+										node1.parent.children[1].drop();
+									} else {
+										node1.parent.model.id = node1.parent.children[0].model.id;
+								 		node1.parent.children[0].drop();		
+									}
+									node1.drop();
+									node2.model.id = new Operand(WIDTH / 20, '1', false);
+								}
+							}
+						}
+					}
+				}
+			} else { 
+			//SI les deux cartes ne sont pas opposer 
+				if ((operand1.getValue() === operand2.getValue()) && (operand1.isPositive() === operand2.isPositive())) {
+					Game.instance.currentGameScene.clear();
+					//SI les deux cartes sont relier par un /
+					if(node1.parent.model.id.getValue() === '/'){
+						if(node1.parent === node2.parent){
+							if(node1.parent.parent.children[0] === node1.parent){
+								node1.parent.parent.children[0].model.id = new Operand(WIDTH / 20, '1', true);
+							} else {
+								node1.parent.parent.children[1].model.id = new Operand(WIDTH / 20, '1', true);
+							}
+							node1.drop();
+							node2.drop();
+						} else {
+							if(node1.parent.parent.model.id.getValue() === '/'){
+								if(node1.parent.parent === node2.parent){
 									if(node1.parent.children[0] === node1){
 										node1.parent.model.id = node1.parent.children[1].model.id;
 										node1.parent.children[1].drop();
@@ -77,15 +137,14 @@ var Operand = Class.create(MutableText, {
 										node1.parent.children[0].drop();
 									}
 									node1.drop();
-									node2.model.id = new Operand(WIDTH / 20, '0', true);
+									node2.model.id = new Operand(WIDTH / 20, '1', true);
 								}
-							}
+							}	
 						}
-					}
-					Game.instance.currentGameScene.refresh();
+					}	  
+				}
 			}
-
-      }
+		} 
 
       // SI on appuie sur une carte de valeur '0' ALORS
 		if (this.value === '0') {
@@ -111,21 +170,21 @@ var Operand = Class.create(MutableText, {
 						  grandFather.children[1] = brother;
 				}
 			} else {
-					  brother = father.children[0];
-					  brother.parent = grandFather;
-					  if(grandFather.children[0] === father){
-								 grandFather.children[0] = brother;
-					  } else {
-								 grandFather.children[1] = brother;
-					  }
+				brother = father.children[0];
+				brother.parent = grandFather;
+					if(grandFather.children[0] === father){
+						 grandFather.children[0] = brother;
+					} else {
+						 grandFather.children[1] = brother;
+					}
 			}
 			node.drop();
-			console.log("after drop :");
-			Game.instance.currentEquation.walk(function (node) {
-					  console.log(node.model.id.text);
-			});			  
-			Game.instance.currentGameScene.refresh();
 		}
+		console.log("after drop :");
+		Game.instance.currentEquation.walk(function (node) {
+		  console.log(node.model.id.text);
+		});			  
+		Game.instance.currentGameScene.refresh();
       // On replace l'opérande si le drag est inutile
       this.x = this.originalX;
       this.y = this.originalY;
