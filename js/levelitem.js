@@ -2,6 +2,8 @@ var LevelItem = Class.create(Group, {
    initialize: function(size, backgroundColor, foregroundColor, level) {
       Group.call(this);
 
+      this.level = 0;
+
       var background = new Sprite(size, size);
       background.backgroundColor = backgroundColor;
 
@@ -29,6 +31,12 @@ var LevelItem = Class.create(Group, {
       this.addChild(foreground);
       this.addChild(number);
       this.addChild(stars);
+   },
+   getLevel: function() {
+      return this.level;
+   },
+   setLevel: function(level) {
+      this.level = level;
    },
    setPosition: function(x, y) {
       this.x = x;
